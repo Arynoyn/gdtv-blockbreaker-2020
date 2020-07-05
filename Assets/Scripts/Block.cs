@@ -9,7 +9,7 @@ public class Block : MonoBehaviour {
     
     //cached reference
     private Level level;
-
+    
     private void Start() {
         level = FindObjectOfType<Level>();
         level.IncreaseBreakableBlockCount();
@@ -20,11 +20,13 @@ public class Block : MonoBehaviour {
     }
 
     private void DestroyBlock() {
+        FindObjectOfType<GameState>().IncreaseScore();
         if (Camera.main != null) {
             AudioSource.PlayClipAtPoint(breakSound, Camera.main.transform.position);
         }
 
         Destroy(gameObject);
         level.BlockDestroyed();
+        
     }
 }
