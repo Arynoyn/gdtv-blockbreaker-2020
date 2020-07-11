@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class GameState : MonoBehaviour
+public class GameSession : MonoBehaviour
 {
     // config params 
     [Range(0.1f,10f)][SerializeField] private float gameSpeed = 1f;
@@ -18,7 +18,7 @@ public class GameState : MonoBehaviour
     // Update is called once per frame
     private void Awake()
     {
-        int gameStateCount = FindObjectsOfType<GameState>().Length;
+        int gameStateCount = FindObjectsOfType<GameSession>().Length;
         if (gameStateCount > 1)
         {
             gameObject.SetActive(false);
@@ -44,5 +44,10 @@ public class GameState : MonoBehaviour
     {
         currentScore += pointsPerBlockDestroyed;
         scoreText.text = currentScore.ToString();
+    }
+
+    public void ResetGameScore()
+    {
+        Destroy(gameObject);
     }
 }
