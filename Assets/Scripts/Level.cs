@@ -9,7 +9,7 @@ public class Level : MonoBehaviour {
         sceneLoader = FindObjectOfType<SceneLoader>();
     }
 
-    public void IncreaseBreakableBlockCount() {
+    public void IncreaseBlockCount() {
         breakableBlocks++;
     }
 

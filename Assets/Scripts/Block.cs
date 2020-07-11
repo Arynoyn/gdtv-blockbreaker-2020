@@ -12,14 +12,25 @@ public class Block : MonoBehaviour {
     //cached reference
     private Level level;
     
-    private void Start() {
-        level = FindObjectOfType<Level>();
-        level.IncreaseBreakableBlockCount();
+    private void Start()
+    {
+        CountBreakableBlocks();
+    }
+
+    private void CountBreakableBlocks()
+    {
+        if (tag == "Breakable")
+        {
+            level = FindObjectOfType<Level>();
+            level.IncreaseBlockCount();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
-        
-        DestroyBlock();
+        if (tag == "Breakable")
+        {
+            DestroyBlock();
+        }
     }
 
     private void DestroyBlock() {
