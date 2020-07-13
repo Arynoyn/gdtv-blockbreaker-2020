@@ -6,11 +6,17 @@ using UnityEngine.Serialization;
 using Object = System.Object;
 
 public class Block : MonoBehaviour {
+    // config params
     [SerializeField] private AudioClip breakSound;
     [SerializeField] private GameObject blockSparklesVFX;
+    [SerializeField] private int maxHits;
+    [SerializeField] private Sprite[] hitSprites;
     
     //cached reference
     private Level level;
+    
+    //state variables
+    [SerializeField] private int timesHit; //TODO: Only serialized for debug purposes
     
     private void Start()
     {
@@ -27,10 +33,20 @@ public class Block : MonoBehaviour {
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
-        if (tag == "Breakable")
-        {
-            DestroyBlock();
+        if (tag == "Breakable") {
+            timesHit++;
+            if (timesHit >= maxHits) {
+                DestroyBlock();
+            }
+            else {
+                ShowNextHitSprite();
+            }
         }
+    }
+
+    private void ShowNextHitSprite() {
+        int spriteIndex = timesHit - 1;
+        GetComponent<SpriteRenderer>().sprite = hitSprites[spriteIndex];
     }
 
     private void DestroyBlock() {
